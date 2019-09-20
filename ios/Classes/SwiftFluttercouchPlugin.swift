@@ -96,6 +96,18 @@ public class SwiftFluttercouchPlugin: NSObject, FlutterPlugin, CBManagerDelegate
             if let returnMap = mCBManager.getDocumentWithId(id: id) {
                 result(NSDictionary(dictionary: returnMap))
             }
+        case "deleteDocument":
+            guard let document = DataConverter.convertSETDictionary(call.arguments as! [String : Any]?) else {
+                result(FlutterError.init(code: "errDel", message: "Error deleting document", details: ""))
+                return
+            }
+            
+            do {
+                try mCBManager.deleteDocument(map: document)
+                result(nil)
+            } catch {
+                result(FlutterError.init(code: "errDel", message: "Error deleting document", details: error.localizedDescription))
+            }
         case "setReplicatorEndpoint":
             let endpoint = call.arguments! as! String
             mCBManager.setReplicatorEndpoint(endpoint: endpoint)

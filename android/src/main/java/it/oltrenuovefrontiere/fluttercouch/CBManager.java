@@ -91,6 +91,14 @@ class CBManager {
         return resultMap;
     }
 
+    public void deleteDocument(Map<String, Object> _map) throws CouchbaseLiteException {
+        Database defaultDb = getDatabase();
+        if (defaultDb != null) {
+            MutableDocument document = new MutableDocument(_map);
+            defaultDb.delete(document);
+        }
+    }
+
     // ENCRYPTION IS ONLY COMPATIBLE WITH ENTERPRISE EDITION - NOT SUPPORTING //
     private void setEncryptionKey(String password) {
         EncryptionKey key = new EncryptionKey(password);
@@ -105,7 +113,7 @@ class CBManager {
     }
 
     public void deleteDatabaseWithName(String _name) throws CouchbaseLiteException {
-        Database.delete(_name,new File(mDBConfig.getDirectory()));
+        Database.delete(_name, new File(mDBConfig.getDirectory()));
     }
 
     public void closeDatabaseWithName(String _name) throws CouchbaseLiteException {
@@ -201,8 +209,8 @@ class CBManager {
     }
 
     void addQuery(String queryId, Query query, ListenerToken token) {
-        mQueries.put(queryId,query);
-        mQueryListenerTokens.put(queryId,token);
+        mQueries.put(queryId, query);
+        mQueryListenerTokens.put(queryId, token);
     }
 
     Query getQuery(String queryId) {
