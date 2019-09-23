@@ -96,17 +96,14 @@ public class SwiftFluttercouchPlugin: NSObject, FlutterPlugin, CBManagerDelegate
             if let returnMap = mCBManager.getDocumentWithId(id: id) {
                 result(NSDictionary(dictionary: returnMap))
             }
-        case "deleteDocument":
-            guard let document = DataConverter.convertSETDictionary(call.arguments as! [String : Any]?) else {
-                result(FlutterError.init(code: "errDel", message: "Error deleting document", details: ""))
-                return
-            }
-            
+        case "deleteDocumentWithId":
             do {
-                try mCBManager.deleteDocument(map: document)
-                result(nil)
+                let id = call.arguments! as! String
+                if let deletedId = try mCBManager.deleteDocumentWithId(id: id) {
+                    result(deletedId)
+                }
             } catch {
-                result(FlutterError.init(code: "errDel", message: "Error deleting document", details: error.localizedDescription))
+                result(FlutterError(code: "errDel",message: "Document deletion failed", details: error.localizedDescription))
             }
         case "setReplicatorEndpoint":
             let endpoint = call.arguments! as! String
@@ -114,7 +111,7 @@ public class SwiftFluttercouchPlugin: NSObject, FlutterPlugin, CBManagerDelegate
             result(nil)
         case "setReplicatorType":
             let type = call.arguments! as! String
-            mCBManager.setReplicatorType(type: type)
+            _ = mCBManager.setReplicatorType(type: type)
             result(nil)
         case "setReplicatorBasicAuthentication":
             let auth = call.arguments! as! [String:String]

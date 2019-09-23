@@ -152,13 +152,13 @@ public class FluttercouchPlugin implements CBManagerDelegate {
                     result.error("errGet", "error getting the document with id: " + _id, e.toString());
                 }
                 break;
-            case ("deleteDocument"):
-                Map<String, Object> document = call.arguments();
+            case ("deleteDocumentWithId"):
+                String _docId = call.arguments();
                 try {
-                    mCBManager.deleteDocument(document);
-                    result.success(null);
+                    String deletedId = mCBManager.deleteDocumentWithId(_docId);
+                    result.success(deletedId);
                 } catch (CouchbaseLiteException e) {
-                    result.error("errDel", "error deleting the document: " + document.toString(), e.toString());
+                    result.error("errDel", "error deleting the document with ID: " + _docId.toString(), e.toString());
                 }
                 break;
             case ("setReplicatorEndpoint"):

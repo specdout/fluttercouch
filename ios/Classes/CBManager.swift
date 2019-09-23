@@ -126,10 +126,15 @@ class CBManager {
         return query
     }
 
-    func deleteDocument(map: Dictionary<String, Any>) throws -> String? {
-        let document: MutableDocument = MutableDocument(data: map);
-        try mDatabase[defaultDatabase]?.delete(document)
-        return nil;
+    func deleteDocumentWithId(id: String) throws -> String? {
+        if let defaultDb: Database = getDatabase() {
+            if let document: Document = defaultDb.document(withID: id) {
+                let mutableDocument = document.toMutable();
+                try defaultDb.deleteDocument(mutableDocument)
+                return id
+            }
+        }
+        return ""
     }
     
     func setReplicatorEndpoint(endpoint: String) {

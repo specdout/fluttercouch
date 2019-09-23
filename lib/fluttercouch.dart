@@ -55,8 +55,8 @@ abstract class Fluttercouch {
     return Document(_docResult["doc"], _docResult["id"]);
   }
 
-  Future<String> deleteDocument(Document _doc) =>
-      _methodChannel.invokeMethod('deleteDocument', _doc.toMap());
+  Future<String> deleteDocumentWithId(String _id) =>
+      _methodChannel.invokeMethod('deleteDocumentWithId', _id);
 
   Future<Null> setReplicatorEndpoint(String _endpoint) =>
       _methodChannel.invokeMethod('setReplicatorEndpoint', _endpoint);

@@ -91,12 +91,21 @@ class CBManager {
         return resultMap;
     }
 
-    public void deleteDocument(Map<String, Object> _map) throws CouchbaseLiteException {
+    public String deleteDocumentWithId(String _id) throws CouchbaseLiteException {
         Database defaultDb = getDatabase();
         if (defaultDb != null) {
-            MutableDocument document = new MutableDocument(_map);
-            defaultDb.delete(document);
+            try {
+                Document document = defaultDb.getDocument(_id);
+                if (document != null) {
+                    MutableDocument mutableDocument = document.toMutable();
+                    defaultDb.delete(mutableDocument);
+                    return _id;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+        return "";
     }
 
     // ENCRYPTION IS ONLY COMPATIBLE WITH ENTERPRISE EDITION - NOT SUPPORTING //
