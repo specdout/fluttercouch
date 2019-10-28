@@ -18,7 +18,8 @@ rootProject.allprojects {
         jcenter()
         maven {
             url "http://mobile.maven.couchbase.com/maven2/dev/"
-        }
+            }
+        maven { url "https://mobile.maven.couchbase.com/maven2/dev/" }
     }
 }
 
@@ -28,7 +29,7 @@ android {
     compileSdkVersion 27
 
     defaultConfig {
-        minSdkVersion 19
+        minSdkVersion 22
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
