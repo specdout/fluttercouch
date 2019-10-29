@@ -39,7 +39,8 @@ class CBManager {
 
     public CBManager(CBManagerDelegate delegate, boolean enableLogging) {
         mDelegate = delegate;
-        mDBConfig = new DatabaseConfiguration(mDelegate.getContext());
+        //mDBConfig = new DatabaseConfiguration(mDelegate.getContext());
+	mDBConfig = new DatabaseConfiguration();
 
         if (enableLogging) {
             final File path = mDelegate.getContext().getCacheDir();
